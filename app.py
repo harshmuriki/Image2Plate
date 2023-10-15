@@ -4,11 +4,10 @@ import streamlit as st
 import requests
 from webcam import webcam
 import io
-# import av
-# from PIL import Image
 import cv_model
 import create_dish
-
+# import av
+# from PIL import Image
 # API_URL = "https://api-inference.huggingface.co/models/google/vit-base-patch16-224"
 API_URL = "https://api-inference.huggingface.co/models/microsoft/resnet-50"
 
@@ -40,8 +39,10 @@ else:
     # val = query(captured_image)
     # print("identified:", val)
     val = cv_model.find_objects(captured_image)
+    # val = "apple"
     if val:
         list_of_items.append(val)
+        st.write(val)
 
     st.write("Object Captured:", val)
 

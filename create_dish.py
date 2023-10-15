@@ -2,20 +2,9 @@ import openai
 
 
 def openai_prompt(init_prompt, list_food_items):
-    openai.api_key = "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"
-
-    # response = openai.ChatCompletion.create(
-    #     model="gpt-3.5-turbo-0613",
-    #     prompt=question,
-    #     temperature=0.7,
-    #     max_tokens=5000,
-    #     top_p=1,
-    #     frequency_penalty=0,
-    #     presence_penalty=0,
-    #     messages=""
-    # )
+    openai.api_key = "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"
     items = ""
-    
+
     for i in list_food_items:
         items += i + ", "
     response = openai.ChatCompletion.create(
