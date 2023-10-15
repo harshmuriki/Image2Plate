@@ -1,3 +1,6 @@
 streamlit==1.27.*
 requests==2.26.0
 streamlit-webcam-example
+ultralytics==8.0.*
+opencv-python==4.8.*
+openai
