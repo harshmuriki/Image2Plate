@@ -1,13 +1,9 @@
 import openai
 
 
-def openai_prompt(init_prompt, list_food_items, key):
+def openai_prompt(init_prompt, items, key):
     openai.api_key = key
 
-    items = ""
-
-    for i in list_food_items:
-        items += i + ", "
     response = openai.ChatCompletion.create(
         model="gpt-3.5-turbo-16k",
         messages=[

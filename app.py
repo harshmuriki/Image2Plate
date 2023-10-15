@@ -8,18 +8,20 @@ import create_dish
 openaikey = st.text_input('OpenAI Key', '')
 hfkey = st.text_input('hf Key', '')
 empty_str = ""
-list_of_items = []
+if 'list_of_items' not in st.session_state:
+    st.session_state.list_of_items = []
+
+if 'all_data' not in st.session_state:
+    st.session_state.all_data = ""
 
 captured_image = webcam()
 
 
-API_URL = "https://api-inference.huggingface.co/models/hustvl/yolos-small"
+API_URL = "https://api-inference.huggingface.co/models/facebook/detr-resnet-101"
 headers = {"Authorization": hfkey}
 
 
 def query(img):
-    # with open(filename, "rb") as f:
-    #     data = f.read()
     img_bytes = io.BytesIO()
     img = img.convert("RGB")
     img.save(img_bytes, format='JPEG')
@@ -34,24 +36,26 @@ if captured_image is None:
 else:
     st.write("Got an image from the webcam:")
     st.image(captured_image)
-    print(type(captured_image))
+    # print(type(captured_image))
     # val = cv_model.find_objects(captured_image)
     val = query(captured_image)
     if val:
-        list_of_items.append(val)
+        st.session_state.list_of_items.append(val)
         st.write(val)
 
-    st.write("Object Captured:", val)
 
-# for i in list_of_items:
-#     empty_str += i + ", "
+for i in st.session_state.list_of_items:
+    st.session_state.all_data += i + ", "
 
-# st.write("Object Captured:", empty_str)
+# print("hweqw", st.session_state.all_data)
+st.write("Objects Captured:", st.session_state.all_data)
+
 # get recipes
 if st.button("Create the Recipes!!!"):
 
-    st.write("Object Captured:", list_of_items)
+    st.write("Object Captured:", st.session_state.list_of_items)
     init_prompt = "These are the list of food items. Give me recipes based on these assuming I have the basic spices"
-    response = create_dish.openai_prompt(init_prompt, list_of_items, openaikey)
+    response = create_dish.openai_prompt(
+        init_prompt, st.session_state.all_data, openaikey)
 
-    st.write("OpenAI response:", response)
+    st.write("AI response:", response)
